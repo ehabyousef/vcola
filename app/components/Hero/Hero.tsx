@@ -3,6 +3,9 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextSplitter } from "../TextSplitter/TextSplitter";
+import { View } from "@react-three/drei";
+import Scene from "../Scene";
+import { Bubbles } from "../Bubbles";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function Hero() {
@@ -73,6 +76,10 @@ export default function Hero() {
 
   return (
     <div className="w-full">
+      <View className="fixed inset-0 z-50 hidden md:block pointer-events-none">
+        <Scene />
+        <Bubbles />
+      </View>
       {/* First Section - Live Gutsy */}
       <section className="py-20 px-4 md:px-8 flex items-center justify-center min-h-screen">
         <div className="max-w-6xl w-full">

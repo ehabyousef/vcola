@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ViewCanvas from "./components/ViewCanvas";
 
 const Alpino = localFont({
   src: "../public/fonts/Alpino-Variable.woff2",
@@ -18,7 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${Alpino.className} h-full antialiased`}>
-      <body className="overflow-x-hidden bg-yellow-300">{children}</body>
+      <body className="overflow-x-hidden bg-yellow-300">
+        {children}
+        <ViewCanvas />
+      </body>
     </html>
   );
 }
