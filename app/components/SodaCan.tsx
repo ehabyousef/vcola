@@ -12,7 +12,10 @@ const flavorTextures = {
   blackCherry: "/labels/cherry.png",
   strawberryLemonade: "/labels/strawberry.png",
   watermelon: "/labels/watermelon.png",
-  vcola: "/labels/can-design-6.jpg",
+  vBluberry: "/labels/vBluberry.jpg",
+  vPinaColada: "/labels/vPinaColada.jpg",
+  vPineApple: "/labels/vPineApple.jpg",
+  vPomegranate: "/labels/vPomegranate.jpg",
 };
 
 const metalMaterial = new THREE.MeshStandardMaterial({

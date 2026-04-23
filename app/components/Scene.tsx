@@ -5,6 +5,7 @@ import { Group } from "three";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
+import { useStore } from "../hooks/Store";
 
 type Props = {};
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -22,7 +23,7 @@ export default function Scene({}: Props) {
   const groupRef = useRef<Group>(null);
 
   const FLOAT_SPEED = 1.5;
-
+  const isReady = useStore((state) => state.isReady);
   useGSAP(() => {
     if (
       !can1Ref.current ||
@@ -35,6 +36,9 @@ export default function Scene({}: Props) {
       !groupRef.current
     )
       return;
+
+    isReady();
+
     gsap.set(can1Ref.current.position, { x: -4, z: -0.2 });
     gsap.set(can1Ref.current.rotation, { z: -0.5 });
 
@@ -95,27 +99,31 @@ export default function Scene({}: Props) {
       <group ref={can1GroupRef}>
         <FloatingCan
           ref={can1Ref}
-          flavor="blackCherry"
+          flavor="vPineApple"
           floatSpeed={FLOAT_SPEED}
         />
       </group>
       <group ref={can2GroupRef}>
         <FloatingCan
           ref={can2Ref}
-          flavor="lemonLime"
+          flavor="vPinaColada"
           floatSpeed={FLOAT_SPEED}
         />
       </group>
 
-      <FloatingCan ref={can3Ref} flavor="grape" floatSpeed={FLOAT_SPEED} />
+      <FloatingCan ref={can3Ref} flavor="vBluberry" floatSpeed={FLOAT_SPEED} />
 
       <FloatingCan
         ref={can4Ref}
-        flavor="strawberryLemonade"
+        flavor="vBluberry"
         floatSpeed={FLOAT_SPEED}
       />
 
-      <FloatingCan ref={can5Ref} flavor="watermelon" floatSpeed={FLOAT_SPEED} />
+      <FloatingCan
+        ref={can5Ref}
+        flavor="vPomegranate"
+        floatSpeed={FLOAT_SPEED}
+      />
 
       {/* <OrbitControls /> */}
       <Environment files="/hdr/lobby.hdr" environmentIntensity={1.5} />

@@ -6,92 +6,102 @@ import { TextSplitter } from "../TextSplitter/TextSplitter";
 import { View } from "@react-three/drei";
 import Scene from "../Scene";
 import { Bubbles } from "../Bubbles";
+import { useStore } from "@/app/hooks/Store";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 export default function Hero() {
-  useGSAP(() => {
-    const intro = gsap.timeline();
-    intro
-      .set("#heading", { opacity: 1 })
-      .from("#heading", {
-        scale: 3,
-        opacity: 0,
-        ease: "power1.in",
-        //   delay: 0.1,
-        stagger: 1,
-      })
-      .from(
-        "#sub_heading",
-        {
+  const ready = useStore((state) => state.ready);
+  const isDestop = useMediaQuery("(min-width:768px)", true);
+  useGSAP(
+    () => {
+      if (!ready && isDestop) return;
+      const intro = gsap.timeline();
+      intro
+        .set("#heading", { opacity: 1 })
+        .from("#heading", {
+          scale: 3,
+          opacity: 0,
+          ease: "power1.in",
+          //   delay: 0.1,
+          stagger: 1,
+        })
+        .from(
+          "#sub_heading",
+          {
+            opacity: 0,
+            y: 30,
+            //   ease: "power1.in",
+          },
+          "+=.001",
+        )
+        .from("#sub_body", {
           opacity: 0,
           y: 30,
-          //   ease: "power1.in",
+        })
+        .from("#body_btn", {
+          opacity: 0,
+          y: 30,
+        });
+
+      const scrollT = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".hero",
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 1.5,
+          markers: true,
         },
-        "+=.001",
-      )
-      .from("#sub_body", {
-        opacity: 0,
-        y: 30,
-      })
-      .from("#body_btn", {
-        opacity: 0,
-        y: 30,
       });
 
-    const scrollT = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
-        markers: true,
-      },
-    });
-
-    scrollT
-      .fromTo(
-        "body",
-        {
-          backgroundColor: "#fde047",
-        },
-        {
-          backgroundColor: "#d9f99d",
-          overwrite: "auto",
-        },
-      )
-      .from(".split-char", {
-        scale: 1.2,
-        y: 40,
-        rotate: -25,
-        opacity: 0,
-        ease: "back.out(3)",
-        duration: 0.5,
-        stagger: 0.1,
-      })
-      .from("#second_body", {
-        y: 20,
-        opacity: 0,
-      });
-  });
+      scrollT
+        .fromTo(
+          "body",
+          {
+            backgroundColor: "#fde047",
+          },
+          {
+            backgroundColor: "#d9f99d",
+            overwrite: "auto",
+          },
+        )
+        .from(".split-char", {
+          scale: 1.2,
+          y: 40,
+          rotate: -25,
+          opacity: 0,
+          ease: "back.out(3)",
+          duration: 0.5,
+          stagger: 0.1,
+        })
+        .from("#second_body", {
+          y: 20,
+          opacity: 0,
+        });
+    },
+    { dependencies: [ready] },
+  );
 
   return (
     <div className="w-full">
-      <View className="fixed inset-0 z-50 hidden md:block pointer-events-none">
-        <Scene />
-        <Bubbles />
-      </View>
+      {isDestop && (
+        <View className="fixed inset-0 z-50 hidden md:block pointer-events-none">
+          <Scene />
+          <Bubbles />
+        </View>
+      )}
       {/* First Section - Live Gutsy */}
-      <section className="py-20 px-4 md:px-8 flex items-center justify-center min-h-screen">
+      <section className="py-0 md:py-20 px-4 md:px-8 flex items-center justify-center min-h-screen">
         <div className="max-w-6xl w-full">
           <div className="flex flex-col items-center justify-center text-center space-y-6">
             <h1
               id="heading"
-              className="text-6xl md:text-[13rem] font-bold"
+              className="text-6xl md:text-[13rem] font-bold leading-none"
               style={{ color: "#f97216" }}
             >
-              LIVE
+              Natural
               <br />
-              GUTSY
+              Flavors
             </h1>
 
             <h2
@@ -121,7 +131,7 @@ export default function Hero() {
       </section>
 
       {/* Second Section - Try All Five Flavors */}
-      <section className="py-20 px-4 md:px-8 flex items-center justify-center min-h-screen">
+      <section className="py-0 md:py-20 px-4 md:px-8 flex items-center justify-center min-h-[50vh] md:min-h-screen">
         <div className="max-w-6xl w-full">
           <div className="flex flex-col items-start justify-center space-y-6">
             <TextSplitter
